@@ -1,0 +1,83 @@
+---
+title: "HW4"
+output: html_document
+date: "2023-04-05"
+author: "Zirui Zhang"
+---
+
+```{r setup, include=FALSE}
+library(readr)
+library(tidyverse)
+library(dplyr)
+library(genetics)
+```
+
+```{r}
+# read in data
+fms = read.csv("./FMS_data.csv")
+# Chi-squared test for association: Suppose we are interested in
+# determining whether there is an association between any of the SNPs within
+# the esr1 gene and an indicator of body mass index (BMI) > 25 at baseline
+# of the FAMuSS study. We use the following code first to identify the names
+# of all of the esr1 SNPs:
+attach(fms)
+NamesEsr1Snps = names(fms)[substr(names(fms),1,4)=="esr1"]
+NamesEsr1Snps
+# The genotype matrix can now be defined by selecting the columns of fms that
+# correspond to the esr1 SNP names:
+fmsEsr1 = fms[,is.element(names(fms),NamesEsr1Snps)]
+# We define our trait to be an indicator for whether BMI is > 25 at baseline:
+Trait = as.numeric(pre.BMI>25)
+# We write a function to record the p-values from applying the χ2-test to
+# the 2 × 3 contingency tables corresponding to each SNP and this trait:
+newFunction = function(Geno){
+  
+ObsTab = table(Trait,Geno)
+return(chisq.test(ObsTab)$p.value)
+
+}
+# Apply this function to the columns of fmsEsr1:
+pvalues = apply(fmsEsr1,2,newFunction)
+# adjust for multiple testing
+p.adj = p.adjust(pvalues, method="BH")
+# Examine population substructure using all 24 SNPs within the akt1 gene.
+NamesAkt1Snps = names(fms)[substr(names(fms),1,4)=="akt1"]
+NamesAkt1Snps
+# Convert the genotype data from factor variables to numeric variables using data.matrix()
+# Note that we additionally assign the missing data a number
+FMSgeno = fms[,is.element(names(fms),NamesAkt1Snps)]
+FMSgenoNum = data.matrix(FMSgeno)
+FMSgenoNum[is.na(FMSgenoNum)] = 4
+PC.FMS = prcomp(FMSgenoNum)
+plot(PC.FMS$"x"[,1],PC.FMS$"x"[,2],xlab="PC1",ylab="PC2")
+```
+
+### QUESTION (1)
+
+#### TRAITS: 1.DBP>120(binary); 2.TG(continuous); CANDIDATE GENES: 1.akt1; 2.prdx; 3.resistin.
+
+Choose two traits (one binary one continuous) and several candidate genes of your choices.
+```{r}
+attach(fms)
+Trait.1 = as.numeric(DBP>80)
+Trait.2 = TG
+NamesAkt1Snps = names(fms)[substr(names(fms),1,4)=="akt1"]
+NamesPrdxSnps = names(fms)[substr(names(fms),1,4)=="prdx"]
+NamesResistinSnps = names(fms)[substr(names(fms),1,8)=="resistin"]
+```
+
+### QUESTION (2)
+
+#### (a) Association Analysis:
+```{r}
+
+```
+
+
+#### (b) Multiple Comparisons Adjustment:
+
+#### (c) Population Stratification using PCA:
+
+#### (d) Summary:
+
+
