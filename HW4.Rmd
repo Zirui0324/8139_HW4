@@ -13,46 +13,6 @@ library(genetics)
 library(knitr)
 ```
 
-```{r, include=FALSE, message=FALSE}
-# read in data
-fms = read.csv("./FMS_data.csv")
-# Chi-squared test for association: Suppose we are interested in
-# determining whether there is an association between any of the SNPs within
-# the esr1 gene and an indicator of body mass index (BMI) > 25 at baseline
-# of the FAMuSS study. We use the following code first to identify the names
-# of all of the esr1 SNPs:
-attach(fms)
-NamesEsr1Snps = names(fms)[substr(names(fms),1,4)=="esr1"]
-NamesEsr1Snps
-# The genotype matrix can now be defined by selecting the columns of fms that
-# correspond to the esr1 SNP names:
-fmsEsr1 = fms[,is.element(names(fms),NamesEsr1Snps)]
-# We define our trait to be an indicator for whether BMI is > 25 at baseline:
-Trait = as.numeric(pre.BMI>25)
-# We write a function to record the p-values from applying the χ2-test to
-# the 2 × 3 contingency tables corresponding to each SNP and this trait:
-newFunction = function(Geno){
-  
-ObsTab = table(Trait,Geno)
-return(chisq.test(ObsTab)$p.value)
-
-}
-# Apply this function to the columns of fmsEsr1:
-pvalues = apply(fmsEsr1,2,newFunction)
-# adjust for multiple testing
-p.adj = p.adjust(pvalues, method="BH")
-# Examine population substructure using all 24 SNPs within the akt1 gene.
-NamesAkt1Snps = names(fms)[substr(names(fms),1,4)=="akt1"]
-NamesAkt1Snps
-# Convert the genotype data from factor variables to numeric variables using data.matrix()
-# Note that we additionally assign the missing data a number
-FMSgeno = fms[,is.element(names(fms),NamesAkt1Snps)]
-FMSgenoNum = data.matrix(FMSgeno)
-FMSgenoNum[is.na(FMSgenoNum)] = 4
-PC.FMS = prcomp(FMSgenoNum)
-plot(PC.FMS$"x"[,1],PC.FMS$"x"[,2],xlab="PC1",ylab="PC2")
-```
-
 ### QUESTION (1)
 
 #### TRAITS: 1.DBP>80(binary); 2.TG(continuous); CANDIDATE GENES: 1.akt1; 2.prdx; 3.resistin.
@@ -78,7 +38,10 @@ fmsResistin = fms[,is.element(names(fms),NamesResistinSnps)]
 ### QUESTION (2)
 
 #### (a) Association Analysis:
-```{r chunk_Trait 1}
+
+The pvalues for Trait 1 are stored in df1.
+
+```{r chunk_Trait 1, warning=FALSE}
 # write a function to record p-values of chi-sq test
 Trait1.Function = function(Geno){
   
@@ -91,52 +54,78 @@ pv.akt1.1 = apply(fmsAkt1,2,Trait1.Function)
 pv.rankl.1 = apply(fmsRankl,2,Trait1.Function)
 pv.resis.1 = apply(fmsResistin,2,Trait1.Function)
 trait1 = c(pv.akt1.1, pv.rankl.1, pv.resis.1)
+df1 = data.frame(names = names(trait1), values = trait1)
 ```
 
-```{r chunk_Trait 2}
+The pvalues for Trait 1 are stored in df3.
+
+```{r chunk_Trait 2, warning=FALSE}
 # write a function to record p-values of chi-sq test
 Trait2.Function = function(Geno){
-  
   ObsTab = table(Trait.2,Geno)
   return(chisq.test(ObsTab)$p.value)
-
 }
 # test of the three genes:
 pv.akt1.2 = apply(fmsAkt1,2,Trait2.Function)
 pv.rankl.2 = apply(fmsRankl,2,Trait2.Function)
 pv.resis.2 = apply(fmsResistin,2,Trait2.Function)
-
+trait2 = c(pv.akt1.2, pv.rankl.2, pv.resis.2)
+df3 = data.frame(names = names(trait2), values = trait2)
 ```
 
 #### (b) Multiple Comparisons Adjustment:
+
+##### Trait 1: 
+
 ```{r}
 # adjusted p-value for trait 1:
 pv.akt1.1.adj = p.adjust(pv.akt1.1, method="BH")
 pv.rankl.1.adj = p.adjust(pv.rankl.1, method="BH")
 pv.resis.1.adj = p.adjust(pv.resis.1, method="BH")
 trait1.ad = c(pv.akt1.1.adj, pv.rankl.1.adj, pv.resis.1.adj)
-# kable for trait 1:
-df1 = data.frame(names = names(trait1), values = trait1)
 df2 = data.frame(names = names(trait1.ad), values = trait1.ad)
+# kable for trait 1:
 trait.1 = 
   merge(df1, df2, by = "names", all.x = TRUE) %>% 
   rename(SNP=names, p.value=values.x, ad.p.value=values.y) 
-trait.1$gene <- c(rep("akt", 24), rep("rankl", 4), rep("resistin", 6))
+trait.1$Gene <- c(rep("akt", 24), rep("rankl", 4), rep("resistin", 6))
+trait.1 %>%
+  relocate(Gene) %>% 
+  kable()
+```
 
+##### Trait 2: 
 
+```{r}
 # adjusted p-value for trait 2:
 pv.akt1.2.adj = p.adjust(pv.akt1.2, method="BH")
 pv.rankl.2.adj = p.adjust(pv.rankl.2, method="BH")
 pv.resis.2.adj = p.adjust(pv.resis.2, method="BH")
 trait2.ad = c(pv.akt1.2.adj, pv.rankl.2.adj, pv.resis.2.adj)
+df4 = data.frame(names = names(trait2.ad), values = trait2.ad)
+# kable for trait 1:
+trait.2 = 
+  merge(df3, df4, by = "names", all.x = TRUE) %>% 
+  rename(SNP=names, p.value=values.x, ad.p.value=values.y) 
+trait.2$Gene <- c(rep("akt", 24), rep("rankl", 4), rep("resistin", 6))
+trait.2 %>%
+  relocate(Gene) %>% 
+  kable()
 ```
-
-
 
 
 #### (c) Population Stratification using PCA:
 ```{r}
+# Convert the genotype data from factor variables to numeric variables using data.matrix()
+# Note that we additionally assign the missing data a number
+NamesHsdSnps = names(fms)[substr(names(fms),1,7)=="hsd11b1"]
+fmsHsd = fms[,is.element(names(fms),NamesHsdSnps)]
 
+FMSgeno = fms[,is.element(names(fms),NamesRanklSnps)]
+FMSgenoNum = data.matrix(FMSgeno)
+FMSgenoNum[is.na(FMSgenoNum)] = 4
+PC.FMS = prcomp(FMSgenoNum)
+plot(PC.FMS$"x"[,1],PC.FMS$"x"[,2],xlab="PC1",ylab="PC2")
 ```
 
 
