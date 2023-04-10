@@ -410,8 +410,10 @@ df1 = data.frame(names = names(trait1), values = trait1)</code></pre>
 <p>The pvalues for Trait 1 are stored in df3:</p>
 <pre class="r"><code># write a function to record p-values of chi-sq test
 Trait2.Function = function(Geno){
-  ObsTab = table(Trait.2,Geno)
+  
+  ObsTab = table(Trait.2,Geno) %&gt;% na.omit()
   return(chisq.test(ObsTab)$p.value)
+  
 }
 # test of the three genes:
 pv.akt1.2 = apply(fmsAkt1,2,Trait2.Function)
@@ -1113,6 +1115,18 @@ and standart deviation of 9.33.</p>
 </div>
 <div id="association-analysis-and-multiple-comparison-adjustment" class="section level5">
 <h5>Association Analysis and Multiple Comparison Adjustment:</h5>
+<p>In the association analysis, no significant association was displayed
+between the traits and genes, indicating that we should analyze on more
+traits and genes.</p>
+</div>
+<div id="population-stratification" class="section level5">
+<h5>Population Stratification:</h5>
+<p>The PCA result showed that 93.47% of variance was explained by PC1
+and 2.21% was explained by PC2. The scree plot also showed that we only
+need 2 dimensions to explain the data. This indicates that individuals
+with the same PC1 and PC2 values are likely to come from the same
+subpopulation, further association analysis could be done by
+conditioning on PC1 and PC2.</p>
 </div>
 </div>
 </div>
