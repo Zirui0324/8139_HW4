@@ -11,11 +11,13 @@ library(tidyverse)
 library(dplyr)
 library(genetics)
 library(knitr)
+library(scales)
+library(ggplot2)
 ```
 
 ### QUESTION (1)
 
-#### TRAITS: 1.DBP>80(binary); 2.TG(continuous); CANDIDATE GENES: 1.akt1; 2.prdx; 3.resistin.
+#### TRAITS: 1.DBP>80(binary); 2.Mean_BP(continuous); CANDIDATE GENES: 1.akt1; 2.prdx; 3.resistin.
 
 ```{r, message=FALSE}
 fms = read.csv("./FMS_data.csv")
@@ -25,7 +27,7 @@ attach(fms)
 ```{r, chunk_set up traits and genes}
 # set up traits
 Trait.1 = as.numeric(DBP>80)
-Trait.2 = Dom.Arm
+Trait.2 = Mean_BP
 # set up genes and corresponding columns
 NamesAkt1Snps = names(fms)[substr(names(fms),1,4)=="akt1"]
 fmsAkt1 = fms[,is.element(names(fms),NamesAkt1Snps)]
@@ -115,20 +117,43 @@ trait.2 %>%
 
 
 #### (c) Population Stratification using PCA:
-```{r}
-# Convert the genotype data from factor variables to numeric variables using data.matrix()
-# Note that we additionally assign the missing data a number
-NamesHsdSnps = names(fms)[substr(names(fms),1,7)=="hsd11b1"]
-fmsHsd = fms[,is.element(names(fms),NamesHsdSnps)]
 
-FMSgeno = fms[,is.element(names(fms),NamesRanklSnps)]
-FMSgenoNum = data.matrix(FMSgeno)
-FMSgenoNum[is.na(FMSgenoNum)] = 4
-PC.FMS = prcomp(FMSgenoNum)
-plot(PC.FMS$"x"[,1],PC.FMS$"x"[,2],xlab="PC1",ylab="PC2")
+```{r}
+# mutate all snps data into numeric, drop infinite and null values
+psd = cbind(fmsAkt1, fmsRankl, fmsResistin) %>% 
+  as.data.frame() %>% 
+  mutate_if(is.character, as.factor) %>% 
+  mutate_if(is.factor, as.numeric) %>% 
+  na.omit()
+# pca using prcomp
+psd.pca = prcomp(psd, center=FALSE, scale=FALSE)
+screeplot(psd.pca, type="lines")
+```
+
+Here the sreeplot indicates that 2 principle components should be enough, to gain a better view, we plotted PC1 vs PC2, PC1 vs PC3 and PC2 vs PC3. 
+
+```{r}
+scores = psd.pca$x
+scores %>% head(5)
+lamda = percent(psd.pca$sdev^2/sum(psd.pca$sdev^2))
+lamda
+plot(psd.pca$"x"[, 1], psd.pca$"x"[, 2], xlab = "PC1", ylab = "PC2")
+plot(psd.pca$"x"[, 1], psd.pca$"x"[, 3], xlab = "PC1", ylab = "PC3")
+plot(psd.pca$"x"[, 2], psd.pca$"x"[, 3], xlab = "PC2", ylab = "PC3")
 ```
 
 
 #### (d) Summary:
+```{r chunk_descriptive statistics}
+# trait.1: whether DBP>80 or not
+skimr::skim(Trait.1)
+table = table(Trait.1)
+barplot(table)
 
+# trait.2: average blood pressure
+skimr::skim(Trait.2)
+df = as.data.frame(Trait.2)
+ggplot(df, aes(x=Trait.2))+
+  geom_histogram()
+```
 
