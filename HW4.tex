@@ -1,0 +1,598 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={HW4},
+  pdfauthor={Zirui Zhang},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{HW4}
+\author{Zirui Zhang}
+\date{2023-04-05}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readr)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(genetics)}
+\FunctionTok{library}\NormalTok{(knitr)}
+\FunctionTok{library}\NormalTok{(scales)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{question-1}{%
+\subsubsection{QUESTION (1)}\label{question-1}}
+
+\hypertarget{traits-1.dbp80binary-2.mean_bpcontinuous-candidate-genes-1.akt1-2.prdx-3.resistin.}{%
+\paragraph{TRAITS: 1.DBP\textgreater80(binary); 2.Mean\_BP(continuous);
+CANDIDATE GENES: 1.akt1; 2.prdx;
+3.resistin.}\label{traits-1.dbp80binary-2.mean_bpcontinuous-candidate-genes-1.akt1-2.prdx-3.resistin.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fms }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"./FMS\_data.csv"}\NormalTok{)}
+\FunctionTok{attach}\NormalTok{(fms)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# set up traits}
+\NormalTok{Trait}\FloatTok{.1} \OtherTok{=} \FunctionTok{as.numeric}\NormalTok{(DBP}\SpecialCharTok{\textgreater{}}\DecValTok{80}\NormalTok{)}
+\NormalTok{Trait}\FloatTok{.2} \OtherTok{=}\NormalTok{ Mean\_BP}
+\CommentTok{\# set up genes and corresponding columns}
+\NormalTok{NamesAkt1Snps }\OtherTok{=} \FunctionTok{names}\NormalTok{(fms)[}\FunctionTok{substr}\NormalTok{(}\FunctionTok{names}\NormalTok{(fms),}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{)}\SpecialCharTok{==}\StringTok{"akt1"}\NormalTok{]}
+\NormalTok{fmsAkt1 }\OtherTok{=}\NormalTok{ fms[,}\FunctionTok{is.element}\NormalTok{(}\FunctionTok{names}\NormalTok{(fms),NamesAkt1Snps)]}
+\NormalTok{NamesRanklSnps }\OtherTok{=} \FunctionTok{names}\NormalTok{(fms)[}\FunctionTok{substr}\NormalTok{(}\FunctionTok{names}\NormalTok{(fms),}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{)}\SpecialCharTok{==}\StringTok{"rankl"}\NormalTok{]}
+\NormalTok{fmsRankl }\OtherTok{=}\NormalTok{ fms[,}\FunctionTok{is.element}\NormalTok{(}\FunctionTok{names}\NormalTok{(fms),NamesRanklSnps)]}
+\NormalTok{NamesResistinSnps }\OtherTok{=} \FunctionTok{names}\NormalTok{(fms)[}\FunctionTok{substr}\NormalTok{(}\FunctionTok{names}\NormalTok{(fms),}\DecValTok{1}\NormalTok{,}\DecValTok{8}\NormalTok{)}\SpecialCharTok{==}\StringTok{"resistin"}\NormalTok{]}
+\NormalTok{fmsResistin }\OtherTok{=}\NormalTok{ fms[,}\FunctionTok{is.element}\NormalTok{(}\FunctionTok{names}\NormalTok{(fms),NamesResistinSnps)]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{question-2}{%
+\subsubsection{QUESTION (2)}\label{question-2}}
+
+\hypertarget{a-association-analysis}{%
+\paragraph{(a) Association Analysis:}\label{a-association-analysis}}
+
+The pvalues for Trait 1 are stored in df1:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# write a function to record p{-}values of chi{-}sq test}
+\NormalTok{Trait1.Function }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(Geno)\{}
+  
+\NormalTok{  ObsTab }\OtherTok{=} \FunctionTok{table}\NormalTok{(Trait}\FloatTok{.1}\NormalTok{,Geno)}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{chisq.test}\NormalTok{(ObsTab)}\SpecialCharTok{$}\NormalTok{p.value)}
+
+\NormalTok{\}}
+\CommentTok{\# test of the three genes:}
+\NormalTok{pv.akt1}\FloatTok{.1} \OtherTok{=} \FunctionTok{apply}\NormalTok{(fmsAkt1,}\DecValTok{2}\NormalTok{,Trait1.Function)}
+\NormalTok{pv.rankl}\FloatTok{.1} \OtherTok{=} \FunctionTok{apply}\NormalTok{(fmsRankl,}\DecValTok{2}\NormalTok{,Trait1.Function)}
+\NormalTok{pv.resis}\FloatTok{.1} \OtherTok{=} \FunctionTok{apply}\NormalTok{(fmsResistin,}\DecValTok{2}\NormalTok{,Trait1.Function)}
+\NormalTok{trait1 }\OtherTok{=} \FunctionTok{c}\NormalTok{(pv.akt1}\FloatTok{.1}\NormalTok{, pv.rankl}\FloatTok{.1}\NormalTok{, pv.resis}\FloatTok{.1}\NormalTok{)}
+\NormalTok{df1 }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{names =} \FunctionTok{names}\NormalTok{(trait1), }\AttributeTok{values =}\NormalTok{ trait1)}
+\end{Highlighting}
+\end{Shaded}
+
+The pvalues for Trait 1 are stored in df3:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# write a function to record p{-}values of chi{-}sq test}
+\NormalTok{Trait2.Function }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(Geno)\{}
+  
+\NormalTok{  ObsTab }\OtherTok{=} \FunctionTok{table}\NormalTok{(Trait}\FloatTok{.2}\NormalTok{,Geno) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{na.omit}\NormalTok{()}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{chisq.test}\NormalTok{(ObsTab)}\SpecialCharTok{$}\NormalTok{p.value)}
+  
+\NormalTok{\}}
+\CommentTok{\# test of the three genes:}
+\NormalTok{pv.akt1}\FloatTok{.2} \OtherTok{=} \FunctionTok{apply}\NormalTok{(fmsAkt1,}\DecValTok{2}\NormalTok{,Trait2.Function)}
+\NormalTok{pv.rankl}\FloatTok{.2} \OtherTok{=} \FunctionTok{apply}\NormalTok{(fmsRankl,}\DecValTok{2}\NormalTok{,Trait2.Function)}
+\NormalTok{pv.resis}\FloatTok{.2} \OtherTok{=} \FunctionTok{apply}\NormalTok{(fmsResistin,}\DecValTok{2}\NormalTok{,Trait2.Function)}
+\NormalTok{trait2 }\OtherTok{=} \FunctionTok{c}\NormalTok{(pv.akt1}\FloatTok{.2}\NormalTok{, pv.rankl}\FloatTok{.2}\NormalTok{, pv.resis}\FloatTok{.2}\NormalTok{)}
+\NormalTok{df3 }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{names =} \FunctionTok{names}\NormalTok{(trait2), }\AttributeTok{values =}\NormalTok{ trait2)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{b-multiple-comparisons-adjustment}{%
+\paragraph{(b) Multiple Comparisons
+Adjustment:}\label{b-multiple-comparisons-adjustment}}
+
+\hypertarget{trait-1}{%
+\subparagraph{Trait 1:}\label{trait-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# adjusted p{-}value for trait 1:}
+\NormalTok{pv.akt1.}\FloatTok{1.}\NormalTok{adj }\OtherTok{=} \FunctionTok{p.adjust}\NormalTok{(pv.akt1}\FloatTok{.1}\NormalTok{, }\AttributeTok{method=}\StringTok{"BH"}\NormalTok{)}
+\NormalTok{pv.rankl.}\FloatTok{1.}\NormalTok{adj }\OtherTok{=} \FunctionTok{p.adjust}\NormalTok{(pv.rankl}\FloatTok{.1}\NormalTok{, }\AttributeTok{method=}\StringTok{"BH"}\NormalTok{)}
+\NormalTok{pv.resis.}\FloatTok{1.}\NormalTok{adj }\OtherTok{=} \FunctionTok{p.adjust}\NormalTok{(pv.resis}\FloatTok{.1}\NormalTok{, }\AttributeTok{method=}\StringTok{"BH"}\NormalTok{)}
+\NormalTok{trait1.ad }\OtherTok{=} \FunctionTok{c}\NormalTok{(pv.akt1.}\FloatTok{1.}\NormalTok{adj, pv.rankl.}\FloatTok{1.}\NormalTok{adj, pv.resis.}\FloatTok{1.}\NormalTok{adj)}
+\NormalTok{df2 }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{names =} \FunctionTok{names}\NormalTok{(trait1.ad), }\AttributeTok{values =}\NormalTok{ trait1.ad)}
+\CommentTok{\# kable for trait 1:}
+\NormalTok{trait}\FloatTok{.1} \OtherTok{=} 
+  \FunctionTok{merge}\NormalTok{(df1, df2, }\AttributeTok{by =} \StringTok{"names"}\NormalTok{, }\AttributeTok{all.x =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{SNP=}\NormalTok{names, }\AttributeTok{p.value=}\NormalTok{values.x, }\AttributeTok{ad.p.value=}\NormalTok{values.y) }
+\NormalTok{trait}\FloatTok{.1}\SpecialCharTok{$}\NormalTok{Gene }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"akt"}\NormalTok{, }\DecValTok{24}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\StringTok{"rankl"}\NormalTok{, }\DecValTok{4}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\StringTok{"resistin"}\NormalTok{, }\DecValTok{6}\NormalTok{))}
+\NormalTok{trait}\FloatTok{.1} \SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{relocate}\NormalTok{(Gene) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{kable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}llrr@{}}
+\toprule()
+Gene & SNP & p.value & ad.p.value \\
+\midrule()
+\endhead
+akt & akt1\_a15756t & 0.7662779 & 1.0000000 \\
+akt & akt1\_a22889g & 0.9118820 & 1.0000000 \\
+akt & akt1\_a7699g & 0.6125758 & 1.0000000 \\
+akt & akt1\_c10744t\_c12886t & 0.1339688 & 1.0000000 \\
+akt & akt1\_c15676t & 0.5484681 & 1.0000000 \\
+akt & akt1\_c5854t\_c7996t & 0.8451164 & 1.0000000 \\
+akt & akt1\_c6024t\_c8166t & 0.6581198 & 1.0000000 \\
+akt & akt1\_c6148t\_c8290t & 0.5466755 & 1.0000000 \\
+akt & akt1\_c832g\_c3359g & 0.6120618 & 1.0000000 \\
+akt & akt1\_c9756a\_c11898t & 0.8718205 & 1.0000000 \\
+akt & akt1\_g14803t & 0.9214736 & 1.0000000 \\
+akt & akt1\_g15129a & 0.9642648 & 1.0000000 \\
+akt & akt1\_g1780a\_g363a & 1.0000000 & 1.0000000 \\
+akt & akt1\_g20703a & 0.0396520 & 0.9516483 \\
+akt & akt1\_g22187a & 0.1751319 & 1.0000000 \\
+akt & akt1\_g23477a & 0.2231705 & 1.0000000 \\
+akt & akt1\_g2347t\_g205t & 0.7337353 & 1.0000000 \\
+akt & akt1\_g2375a\_g233a & 0.8493656 & 1.0000000 \\
+akt & akt1\_g288c & 0.7693805 & 1.0000000 \\
+akt & akt1\_g4362c & 0.8665157 & 1.0000000 \\
+akt & akt1\_t10598a\_t12740a & 0.9606470 & 1.0000000 \\
+akt & akt1\_t10726c\_t12868c & 0.6001960 & 1.0000000 \\
+akt & akt1\_t22932c & 0.6354618 & 1.0000000 \\
+akt & akt1\_t8407g & 0.5925857 & 1.0000000 \\
+rankl & rankl\_17458177 & 0.2963562 & 0.5927125 \\
+rankl & rankl\_17536280 & 0.0569337 & 0.2277346 \\
+rankl & rankl\_17639305 & 0.7926808 & 0.7926808 \\
+rankl & rankl\_4531631 & 0.7794136 & 0.7926808 \\
+resistin & resistin\_a537c & 0.6867151 & 0.9426650 \\
+resistin & resistin\_c180g & 0.9426650 & 0.9426650 \\
+resistin & resistin\_c30t & 0.0788187 & 0.4729124 \\
+resistin & resistin\_c398t & 0.9288919 & 0.9426650 \\
+resistin & resistin\_c980g & 0.6647105 & 0.9426650 \\
+resistin & resistin\_g540a & 0.8734434 & 0.9426650 \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{trait-2}{%
+\subparagraph{Trait 2:}\label{trait-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# adjusted p{-}value for trait 2:}
+\NormalTok{pv.akt1.}\FloatTok{2.}\NormalTok{adj }\OtherTok{=} \FunctionTok{p.adjust}\NormalTok{(pv.akt1}\FloatTok{.2}\NormalTok{, }\AttributeTok{method=}\StringTok{"BH"}\NormalTok{)}
+\NormalTok{pv.rankl.}\FloatTok{2.}\NormalTok{adj }\OtherTok{=} \FunctionTok{p.adjust}\NormalTok{(pv.rankl}\FloatTok{.2}\NormalTok{, }\AttributeTok{method=}\StringTok{"BH"}\NormalTok{)}
+\NormalTok{pv.resis.}\FloatTok{2.}\NormalTok{adj }\OtherTok{=} \FunctionTok{p.adjust}\NormalTok{(pv.resis}\FloatTok{.2}\NormalTok{, }\AttributeTok{method=}\StringTok{"BH"}\NormalTok{)}
+\NormalTok{trait2.ad }\OtherTok{=} \FunctionTok{c}\NormalTok{(pv.akt1.}\FloatTok{2.}\NormalTok{adj, pv.rankl.}\FloatTok{2.}\NormalTok{adj, pv.resis.}\FloatTok{2.}\NormalTok{adj)}
+\NormalTok{df4 }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{names =} \FunctionTok{names}\NormalTok{(trait2.ad), }\AttributeTok{values =}\NormalTok{ trait2.ad)}
+\CommentTok{\# kable for trait 1:}
+\NormalTok{trait}\FloatTok{.2} \OtherTok{=} 
+  \FunctionTok{merge}\NormalTok{(df3, df4, }\AttributeTok{by =} \StringTok{"names"}\NormalTok{, }\AttributeTok{all.x =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{SNP=}\NormalTok{names, }\AttributeTok{p.value=}\NormalTok{values.x, }\AttributeTok{ad.p.value=}\NormalTok{values.y) }
+\NormalTok{trait}\FloatTok{.2}\SpecialCharTok{$}\NormalTok{Gene }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"akt"}\NormalTok{, }\DecValTok{24}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\StringTok{"rankl"}\NormalTok{, }\DecValTok{4}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\StringTok{"resistin"}\NormalTok{, }\DecValTok{6}\NormalTok{))}
+\NormalTok{trait}\FloatTok{.2} \SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{relocate}\NormalTok{(Gene) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{kable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}llrr@{}}
+\toprule()
+Gene & SNP & p.value & ad.p.value \\
+\midrule()
+\endhead
+akt & akt1\_a15756t & NaN & NaN \\
+akt & akt1\_a22889g & NaN & NaN \\
+akt & akt1\_a7699g & 0.9783252 & 0.9976009 \\
+akt & akt1\_c10744t\_c12886t & 0.8446990 & 0.9976009 \\
+akt & akt1\_c15676t & NaN & NaN \\
+akt & akt1\_c5854t\_c7996t & NaN & NaN \\
+akt & akt1\_c6024t\_c8166t & 0.0827221 & 0.2688469 \\
+akt & akt1\_c6148t\_c8290t & NaN & NaN \\
+akt & akt1\_c832g\_c3359g & NaN & NaN \\
+akt & akt1\_c9756a\_c11898t & 0.0640719 & 0.2688469 \\
+akt & akt1\_g14803t & NaN & NaN \\
+akt & akt1\_g15129a & 0.5913630 & 0.9976009 \\
+akt & akt1\_g1780a\_g363a & NaN & NaN \\
+akt & akt1\_g20703a & NaN & NaN \\
+akt & akt1\_g22187a & 0.0709007 & 0.2688469 \\
+akt & akt1\_g23477a & NaN & NaN \\
+akt & akt1\_g2347t\_g205t & 0.0572764 & 0.2688469 \\
+akt & akt1\_g2375a\_g233a & 0.9976009 & 0.9976009 \\
+akt & akt1\_g288c & NaN & NaN \\
+akt & akt1\_g4362c & 0.9316533 & 0.9976009 \\
+akt & akt1\_t10598a\_t12740a & 0.6479857 & 0.9976009 \\
+akt & akt1\_t10726c\_t12868c & 0.9532788 & 0.9976009 \\
+akt & akt1\_t22932c & 0.8724070 & 0.9976009 \\
+akt & akt1\_t8407g & 0.7099138 & 0.9976009 \\
+rankl & rankl\_17458177 & NaN & NaN \\
+rankl & rankl\_17536280 & NaN & NaN \\
+rankl & rankl\_17639305 & NaN & NaN \\
+rankl & rankl\_4531631 & NaN & NaN \\
+resistin & resistin\_a537c & NaN & NaN \\
+resistin & resistin\_c180g & NaN & NaN \\
+resistin & resistin\_c30t & NaN & NaN \\
+resistin & resistin\_c398t & NaN & NaN \\
+resistin & resistin\_c980g & NaN & NaN \\
+resistin & resistin\_g540a & NaN & NaN \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{c-population-stratification-using-pca}{%
+\paragraph{(c) Population Stratification using
+PCA:}\label{c-population-stratification-using-pca}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# mutate all snps data into numeric, drop infinite and null values}
+\NormalTok{psd }\OtherTok{=} \FunctionTok{cbind}\NormalTok{(fmsAkt1, fmsRankl, fmsResistin) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.factor) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.factor, as.numeric) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{na.omit}\NormalTok{()}
+\CommentTok{\# pca using prcomp}
+\NormalTok{psd.pca }\OtherTok{=} \FunctionTok{prcomp}\NormalTok{(psd, }\AttributeTok{center=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{scale=}\ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{screeplot}\NormalTok{(psd.pca, }\AttributeTok{type=}\StringTok{"lines"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HW4_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+Here the sreeplot indicates that 2 principle components should be
+enough, to gain a better view, we plotted PC1 vs PC2, PC1 vs PC3 and PC2
+vs PC3.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scores }\OtherTok{=}\NormalTok{ psd.pca}\SpecialCharTok{$}\NormalTok{x}
+\NormalTok{lamda }\OtherTok{=} \FunctionTok{percent}\NormalTok{(psd.pca}\SpecialCharTok{$}\NormalTok{sdev}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(psd.pca}\SpecialCharTok{$}\NormalTok{sdev}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+\NormalTok{lamda}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "93.47181%" "2.21415%"  "0.76310%"  "0.72506%"  "0.62729%"  "0.56095%" 
+##  [7] "0.23995%"  "0.20856%"  "0.17355%"  "0.13649%"  "0.11794%"  "0.11083%" 
+## [13] "0.09500%"  "0.08413%"  "0.07224%"  "0.06227%"  "0.05386%"  "0.04298%" 
+## [19] "0.04048%"  "0.03845%"  "0.02621%"  "0.02549%"  "0.01993%"  "0.01596%" 
+## [25] "0.01382%"  "0.01284%"  "0.01165%"  "0.00975%"  "0.00808%"  "0.00616%" 
+## [31] "0.00436%"  "0.00333%"  "0.00253%"  "0.00082%"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(psd.pca}\SpecialCharTok{$}\StringTok{"x"}\NormalTok{[, }\DecValTok{1}\NormalTok{], psd.pca}\SpecialCharTok{$}\StringTok{"x"}\NormalTok{[, }\DecValTok{2}\NormalTok{], }\AttributeTok{xlab =} \StringTok{"PC1"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"PC2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HW4_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(psd.pca}\SpecialCharTok{$}\StringTok{"x"}\NormalTok{[, }\DecValTok{1}\NormalTok{], psd.pca}\SpecialCharTok{$}\StringTok{"x"}\NormalTok{[, }\DecValTok{3}\NormalTok{], }\AttributeTok{xlab =} \StringTok{"PC1"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"PC3"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HW4_files/figure-latex/unnamed-chunk-5-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(psd.pca}\SpecialCharTok{$}\StringTok{"x"}\NormalTok{[, }\DecValTok{2}\NormalTok{], psd.pca}\SpecialCharTok{$}\StringTok{"x"}\NormalTok{[, }\DecValTok{3}\NormalTok{], }\AttributeTok{xlab =} \StringTok{"PC2"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"PC3"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HW4_files/figure-latex/unnamed-chunk-5-3.pdf}
+
+\hypertarget{d-summary}{%
+\paragraph{(d) Summary:}\label{d-summary}}
+
+\hypertarget{descriptive-statistics-for-trait1-whether-dbp80-or-not}{%
+\subparagraph{Descriptive Statistics For Trait1: Whether
+DBP\textgreater80 or
+not}\label{descriptive-statistics-for-trait1-whether-dbp80-or-not}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{skimr}\SpecialCharTok{::}\FunctionTok{skim}\NormalTok{(Trait}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule()
+\endhead
+Name & Trait.1 \\
+Number of rows & 1397 \\
+Number of columns & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule()
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1918}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1370}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1918}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0685}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0548}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0411}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0548}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0548}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0548}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0685}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0822}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+skim\_variable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_missing
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+complete\_rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+mean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p25
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p50
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p75
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p100
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+hist
+\end{minipage} \\
+\midrule()
+\endhead
+data & 379 & 0.73 & 0.2 & 0.4 & 0 & 0 & 0 & 0 & 1 & ▇▁▁▁▂ \\
+\bottomrule()
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{table }\OtherTok{=} \FunctionTok{table}\NormalTok{(Trait}\FloatTok{.1}\NormalTok{)}
+\FunctionTok{barplot}\NormalTok{(table)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HW4_files/figure-latex/chunk_descriptive1-1.pdf}
+
+We can see that for the DBP variable, we have 1397 datapoints with 379
+missing values. 80\% of the patients has DBP less than or equal to
+80mmHg while 20\% has it greater than 80mmHg. The mean and median of DBP
+are seperately 0.2 and 0 with a standard deviation of 0.4.
+
+\hypertarget{descriptive-statistics-for-trait2-average-blood-pressure}{%
+\subparagraph{Descriptive Statistics For Trait2: Average blood
+pressure}\label{descriptive-statistics-for-trait2-average-blood-pressure}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{skimr}\SpecialCharTok{::}\FunctionTok{skim}\NormalTok{(Trait}\FloatTok{.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule()
+\endhead
+Name & Trait.2 \\
+Number of rows & 1397 \\
+Number of columns & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 1 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule()
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1867}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1333}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1867}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0800}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0667}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0400}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0533}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0533}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0533}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0800}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+skim\_variable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_missing
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+complete\_rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+mean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p25
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p50
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p75
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p100
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+hist
+\end{minipage} \\
+\midrule()
+\endhead
+data & 379 & 0.73 & 87.44 & 9.33 & 57 & 81 & 89 & 93 & 121 & ▁▃▇▂▁ \\
+\bottomrule()
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{=} \FunctionTok{as.data.frame}\NormalTok{(Trait}\FloatTok{.2}\NormalTok{)}
+\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Trait}\FloatTok{.2}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HW4_files/figure-latex/chunk_descriptive2-1.pdf}
+
+For the average blood pressure variable, we also have 1397 datapoints
+with 379 missing values. The data approximately follows a normal
+distribution, slightly left skewed with a mean of 87.44, median of 89
+and standart deviation of 9.33.
+
+\hypertarget{association-analysis-and-multiple-comparison-adjustment}{%
+\subparagraph{Association Analysis and Multiple Comparison
+Adjustment:}\label{association-analysis-and-multiple-comparison-adjustment}}
+
+In the association analysis, no significant association was displayed
+between the traits and genes, indicating that we should analyze on more
+traits and genes.
+
+\hypertarget{population-stratification}{%
+\subparagraph{Population
+Stratification:}\label{population-stratification}}
+
+The PCA result showed that 93.47\% of variance was explained by PC1 and
+2.21\% was explained by PC2. The scree plot also showed that we only
+need 2 dimensions to explain the data. This indicates that individuals
+with the same PC1 and PC2 values are likely to come from the same
+subpopulation, further association analysis could be done by
+conditioning on PC1 and PC2.
+
+\end{document}

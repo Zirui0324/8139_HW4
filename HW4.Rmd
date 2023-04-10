@@ -146,7 +146,7 @@ plot(psd.pca$"x"[, 2], psd.pca$"x"[, 3], xlab = "PC2", ylab = "PC3")
 
 #### (d) Summary:
 
-##### Descriptive Statistics For Trait1: Whether DBP>80 or not
+##### 1. Descriptive Statistics For Trait1: Whether DBP>80 or not
 
 ```{r chunk_descriptive1, message=FALSE, warning=FALSE}
 skimr::skim(Trait.1)
@@ -156,7 +156,7 @@ barplot(table)
 
 We can see that for the DBP variable, we have 1397 datapoints with 379 missing values. 80% of the patients has DBP less than or equal to 80mmHg while 20% has it greater than 80mmHg. The mean and median of DBP are seperately 0.2 and 0 with a standard deviation of 0.4.
 
-##### Descriptive Statistics For Trait2: Average blood pressure
+##### 2. Descriptive Statistics For Trait2: Average blood pressure
 
 ```{r chunk_descriptive2, message=FALSE, warning=FALSE}
 skimr::skim(Trait.2)
@@ -167,11 +167,11 @@ ggplot(df, aes(x=Trait.2))+
 
 For the average blood pressure variable, we also have 1397 datapoints with 379 missing values. The data approximately follows a normal distribution, slightly left skewed with a mean of 87.44, median of 89 and standart deviation of 9.33.
 
-##### Association Analysis and Multiple Comparison Adjustment:
+##### 3. Association Analysis and Multiple Comparison Adjustment:
 
 In the association analysis, no significant association was displayed between the traits and genes, indicating that we should analyze on more traits and genes.
 
-##### Population Stratification:
+##### 4. Population Stratification:
 
 The PCA result showed that 93.47% of variance was explained by PC1 and 2.21% was explained by PC2. The scree plot also showed that we only need 2 dimensions to explain the data. This indicates that individuals with the same PC1 and PC2 values are likely to come from the same subpopulation, further association analysis could be done by conditioning on PC1 and PC2.
 
