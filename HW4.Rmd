@@ -41,7 +41,7 @@ fmsResistin = fms[,is.element(names(fms),NamesResistinSnps)]
 
 #### (a) Association Analysis:
 
-The pvalues for Trait 1 are stored in df1.
+The pvalues for Trait 1 are stored in df1:
 
 ```{r chunk_Trait 1, warning=FALSE}
 # write a function to record p-values of chi-sq test
@@ -59,7 +59,7 @@ trait1 = c(pv.akt1.1, pv.rankl.1, pv.resis.1)
 df1 = data.frame(names = names(trait1), values = trait1)
 ```
 
-The pvalues for Trait 1 are stored in df3.
+The pvalues for Trait 1 are stored in df3:
 
 ```{r chunk_Trait 2, warning=FALSE}
 # write a function to record p-values of chi-sq test
@@ -134,7 +134,6 @@ Here the sreeplot indicates that 2 principle components should be enough, to gai
 
 ```{r}
 scores = psd.pca$x
-scores %>% head(5)
 lamda = percent(psd.pca$sdev^2/sum(psd.pca$sdev^2))
 lamda
 plot(psd.pca$"x"[, 1], psd.pca$"x"[, 2], xlab = "PC1", ylab = "PC2")
@@ -144,16 +143,26 @@ plot(psd.pca$"x"[, 2], psd.pca$"x"[, 3], xlab = "PC2", ylab = "PC3")
 
 
 #### (d) Summary:
-```{r chunk_descriptive statistics}
-# trait.1: whether DBP>80 or not
+
+##### Descriptive Statistics For Trait1: Whether DBP>80 or not
+
+```{r chunk_descriptive1, message=FALSE, warning=FALSE}
 skimr::skim(Trait.1)
 table = table(Trait.1)
 barplot(table)
+```
 
-# trait.2: average blood pressure
+We can see that for the DBP variable, we have 1397 datapoints with 379 missing values. 80% of the patients has DBP less than or equal to 80mmHg while 20% has it greater than 80mmHg. The mean and median of DBP are seperately 0.2 and 0 with a standard deviation of 0.4.
+
+##### Descriptive Statistics For Trait2: Average blood pressure
+
+```{r chunk_descriptive2, message=FALSE, warning=FALSE}
 skimr::skim(Trait.2)
 df = as.data.frame(Trait.2)
 ggplot(df, aes(x=Trait.2))+
   geom_histogram()
 ```
 
+For the average blood pressure variable, we also have 1397 datapoints with 379 missing values. The data approximately follows a normal distribution, slightly left skewed with a mean of 87.44, median of 89 and standart deviation of 9.33.
+
+##### Association Analysis and Multiple Comparison Adjustment:
