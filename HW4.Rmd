@@ -5,14 +5,15 @@ date: "2023-04-05"
 author: "Zirui Zhang"
 ---
 
-```{r setup, include=FALSE}
+```{r setup, message=FALSE}
 library(readr)
 library(tidyverse)
 library(dplyr)
 library(genetics)
+library(knitr)
 ```
 
-```{r}
+```{r, include=FALSE, message=FALSE}
 # read in data
 fms = read.csv("./FMS_data.csv")
 # Chi-squared test for association: Suppose we are interested in
@@ -54,29 +55,90 @@ plot(PC.FMS$"x"[,1],PC.FMS$"x"[,2],xlab="PC1",ylab="PC2")
 
 ### QUESTION (1)
 
-#### TRAITS: 1.DBP>120(binary); 2.TG(continuous); CANDIDATE GENES: 1.akt1; 2.prdx; 3.resistin.
+#### TRAITS: 1.DBP>80(binary); 2.TG(continuous); CANDIDATE GENES: 1.akt1; 2.prdx; 3.resistin.
 
-Choose two traits (one binary one continuous) and several candidate genes of your choices.
-```{r}
+```{r, message=FALSE}
+fms = read.csv("./FMS_data.csv")
 attach(fms)
+```
+
+```{r, chunk_set up traits and genes}
+# set up traits
 Trait.1 = as.numeric(DBP>80)
-Trait.2 = TG
+Trait.2 = Dom.Arm
+# set up genes and corresponding columns
 NamesAkt1Snps = names(fms)[substr(names(fms),1,4)=="akt1"]
-NamesPrdxSnps = names(fms)[substr(names(fms),1,4)=="prdx"]
+fmsAkt1 = fms[,is.element(names(fms),NamesAkt1Snps)]
+NamesRanklSnps = names(fms)[substr(names(fms),1,5)=="rankl"]
+fmsRankl = fms[,is.element(names(fms),NamesRanklSnps)]
 NamesResistinSnps = names(fms)[substr(names(fms),1,8)=="resistin"]
+fmsResistin = fms[,is.element(names(fms),NamesResistinSnps)]
 ```
 
 ### QUESTION (2)
 
 #### (a) Association Analysis:
+```{r chunk_Trait 1}
+# write a function to record p-values of chi-sq test
+Trait1.Function = function(Geno){
+  
+  ObsTab = table(Trait.1,Geno)
+  return(chisq.test(ObsTab)$p.value)
+
+}
+# test of the three genes:
+pv.akt1.1 = apply(fmsAkt1,2,Trait1.Function)
+pv.rankl.1 = apply(fmsRankl,2,Trait1.Function)
+pv.resis.1 = apply(fmsResistin,2,Trait1.Function)
+trait1 = c(pv.akt1.1, pv.rankl.1, pv.resis.1)
+```
+
+```{r chunk_Trait 2}
+# write a function to record p-values of chi-sq test
+Trait2.Function = function(Geno){
+  
+  ObsTab = table(Trait.2,Geno)
+  return(chisq.test(ObsTab)$p.value)
+
+}
+# test of the three genes:
+pv.akt1.2 = apply(fmsAkt1,2,Trait2.Function)
+pv.rankl.2 = apply(fmsRankl,2,Trait2.Function)
+pv.resis.2 = apply(fmsResistin,2,Trait2.Function)
+
+```
+
+#### (b) Multiple Comparisons Adjustment:
+```{r}
+# adjusted p-value for trait 1:
+pv.akt1.1.adj = p.adjust(pv.akt1.1, method="BH")
+pv.rankl.1.adj = p.adjust(pv.rankl.1, method="BH")
+pv.resis.1.adj = p.adjust(pv.resis.1, method="BH")
+trait1.ad = c(pv.akt1.1.adj, pv.rankl.1.adj, pv.resis.1.adj)
+# kable for trait 1:
+df1 = data.frame(names = names(trait1), values = trait1)
+df2 = data.frame(names = names(trait1.ad), values = trait1.ad)
+trait.1 = 
+  merge(df1, df2, by = "names", all.x = TRUE) %>% 
+  rename(SNP=names, p.value=values.x, ad.p.value=values.y) 
+trait.1$gene <- c(rep("akt", 24), rep("rankl", 4), rep("resistin", 6))
+
+
+# adjusted p-value for trait 2:
+pv.akt1.2.adj = p.adjust(pv.akt1.2, method="BH")
+pv.rankl.2.adj = p.adjust(pv.rankl.2, method="BH")
+pv.resis.2.adj = p.adjust(pv.resis.2, method="BH")
+trait2.ad = c(pv.akt1.2.adj, pv.rankl.2.adj, pv.resis.2.adj)
+```
+
+
+
+
+#### (c) Population Stratification using PCA:
 ```{r}
 
 ```
 
-
-#### (b) Multiple Comparisons Adjustment:
-
-#### (c) Population Stratification using PCA:
 
 #### (d) Summary:
 
